@@ -6,21 +6,28 @@ Created on Thu Nov  3 16:20:29 2022
 """
 import osmnx as ox
 import geopandas as gpd
+import matplotlib.pyplot as plt
 
-def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_residential, color_parks, color_greens, color_water, file_motorways, file_primary, file_residential, file_parks, file_greens, file_water):
+
+
+
+
+
+
+def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_residential, color_parks, color_greens, color_water, file_motorways, file_primary, file_residential, file_parks, file_greens, file_water, width, height, dpi):
 
     G = ox.graph_from_point(point, dist=dist, custom_filter=('["highway"~"motorway|trunk"]'), simplify=True, truncate_by_edge=True, retain_all = True )
     
     fig, ax = ox.plot_graph(G, bbox=(bN, bS, bE, bW) ,
                             node_size=0,
-                            figsize=(27, 40),
-                            dpi = 300,
+                            figsize=(width, height),
+                            dpi = dpi,
                             edge_color=color_motorways,
-                            edge_linewidth=4,
+                            edge_linewidth=2,
                             edge_alpha=1)
     
     fig.tight_layout(pad=0)
-    fig.savefig(file_motorways, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_motorways,  dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
     
     
@@ -28,13 +35,13 @@ def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_resi
     
     fig, ax = ox.plot_graph(G, bbox=(bN, bS, bE, bW), 
                             node_size=0,
-                            figsize=(27, 40),
-                            dpi = 300,
+                            figsize=(width, height),
+                            dpi = dpi,
                             edge_color=color_primary,
-                            edge_linewidth=3,
+                            edge_linewidth=1,
                             edge_alpha=1)
     fig.tight_layout(pad=0)
-    fig.savefig(file_primary, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_primary, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
     
     
@@ -44,13 +51,13 @@ def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_resi
     
     fig, ax = ox.plot_graph(G, bbox=(bN, bS, bE, bW), 
                             node_size=0,
-                            figsize=(27, 40),
-                            dpi = 300,
+                            figsize=(width, height),
+                            dpi = dpi,
                             edge_color=color_residential,
-                            edge_linewidth=2.5,
+                            edge_linewidth=0.75,
                             edge_alpha=1)
     fig.tight_layout(pad=0)
-    fig.savefig(file_residential, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_residential, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
     
     
@@ -58,25 +65,27 @@ def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_resi
     
     parks = leisure[leisure["leisure"].isin(["pitch","park","playground", "cemetery"])]
     # Plot
-    fig, ax = ox.plot_footprints(parks, bbox=(bN, bS, bE, bW), figsize=(27, 40), 
-                            dpi = 300,
+    fig, ax = ox.plot_footprints(parks, bbox=(bN, bS, bE, bW), 
+                            figsize=(width, height),
+                            dpi = dpi,
                             color=color_parks, 
                             show=False, close=False)
     ax = parks.plot(ax=ax, fc=color_parks, markersize=0)
     fig.tight_layout(pad=0)
-    fig.savefig(file_parks, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_parks, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
     
     landuse = ox.geometries_from_bbox(bN, bS, bE, bW, tags={'landuse':True})
     greens = landuse[landuse["landuse"].isin(["forest","farmland","farmyard", "meadow", "orchard", "vineyard"])]
     # Plot
-    fig, ax = ox.plot_footprints(greens, bbox=(bN, bS, bE, bW), figsize=(27, 40), 
-                            dpi = 300,
+    fig, ax = ox.plot_footprints(greens, bbox=(bN, bS, bE, bW),
+                            figsize=(width, height),
+                            dpi = dpi,
                             color=color_greens, 
                             show=False, close=False)
     ax = greens.plot(ax=ax, fc=color_greens, markersize=0)
     fig.tight_layout(pad=0)
-    fig.savefig(file_greens, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_greens, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
     
     
@@ -85,16 +94,33 @@ def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_resi
     # Load coastline polygons
     water = gpd.read_file('../assets/water-polygons-split-4326/water_polygons.shp', bbox=(bW, bN, bE, bS))
     # Plot
-    fig, ax = ox.plot_footprints(water, bbox=(bN, bS, bE, bW), figsize=(27, 40), 
-                            dpi = 300,
+    fig, ax = ox.plot_footprints(water, bbox=(bN, bS, bE, bW),
+                            figsize=(width, height),
+                            dpi = dpi,
                             color=color_water, 
                             show=False, close=False)
     ax = G.plot(ax=ax, fc=color_water, markersize=0)
     
     fig.tight_layout(pad=0)
-    fig.savefig(file_water, dpi=300, bbox_inches='tight', format="png", facecolor=fig.get_facecolor(), transparent=True)
+    fig.savefig(file_water, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
+def setPrintSize(paperSize):
+    if paperSize == "A3":
+        width = 11.7
+        height = 16.5
+        
+    elif paperSize == "A4":
+        width = 8.3
+        height = 11.7
+     
+    else:
+        width = 8.3
+        height = 11.7
+
     
+    return width, height
+    
+     
     
 def setStyle(style):
 
