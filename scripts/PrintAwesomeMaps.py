@@ -18,7 +18,7 @@ from MapPlot import plot, setStyle, setPrintSize
 # Earth’s radius, sphere
 R=6378137
 
-
+ 
 
 with open("../coords.csv") as csvFile:   #open the file
   CSVdata = csv.reader(csvFile, delimiter=',')  #read the data
@@ -53,9 +53,9 @@ with open("../coords.csv") as csvFile:   #open the file
     file_motorways = "../out/" + location + "_" + style + "_6_motorway_trunk.png"
     file_primary = "../out/" + location + "_" + style + "_5_primary_secondary.png"
     file_residential = "../out/" + location + "_" + style + "_4_residential.png"
-    file_parks = "../out/" + location + "_" + style + "_3_parks.png"
-    file_greens = "../out/" + location + "_" + style + "_2_green_areas.png"
-    file_water = "../out/" + location + "_" + style + "_1_water.png"
+    file_water = "../out/" + location + "_" + style + "_3_water.png"
+    file_parks = "../out/" + location + "_" + style + "_2_parks.png"
+    file_greens = "../out/" + location + "_" + style + "_1_green_areas.png"
 
 
 
