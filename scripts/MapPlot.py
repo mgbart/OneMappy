@@ -2,7 +2,7 @@
 """
 Created on Thu Nov  3 16:20:29 2022
 
-@author: matia
+@author: Matias Bernhardt
 """
 import osmnx as ox
 import geopandas as gpd

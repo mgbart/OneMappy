@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 27 16:03:16 2022
 
-@author: matia
+@author: Matias Bernhardt
 """
 
 
