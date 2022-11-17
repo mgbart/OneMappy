@@ -39,7 +39,7 @@ def plot(point, dist, bN, bS, bE, bW, color_motorways, color_primary, color_resi
                             dpi = dpi,
                             edge_color=color_primary,
                             edge_linewidth=1,
-                            edge_alpha=1)
+                             edge_alpha=1)
     fig.tight_layout(pad=0)
     fig.savefig(file_primary, dpi=dpi, bbox_inches='tight', pad_inches=0, format="png", facecolor=fig.get_facecolor(), transparent=True)
     
@@ -176,6 +176,15 @@ def setStyle(style):
         color_greens = "#00cc00"
         color_water = "#ffffff"
         # BG Color for illustrator: #ffffff
+        
+    elif style == "treasure-map":    
+        color_motorways = "#c64c53" 
+        color_primary = "#c64c53"
+        color_residential = "#c64c53"
+        color_parks = "#b9d7ab"
+        color_greens = "#b9d7ab"
+        color_water = "#7dc1a8"
+        # BG Color for illustrator: #f5ead0
         
     elif style == "night":    
         color_motorways = "#f8ee98" 
